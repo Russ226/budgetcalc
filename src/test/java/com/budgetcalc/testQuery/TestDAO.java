@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +35,18 @@ public class TestDAO {
         assertEquals(1, expenses.get(0).getId());
         assertEquals(2, expenses.get(1).getId());
         assertEquals(3, expenses.get(2).getId());
+    }
+
+
+    @Test
+    @Transactional
+    public void testGetBytMonth() throws ParseException {
+
+        List<Expense> expenses = expenseDAO.getByMonth("February");
+
+        assertEquals(4, expenses.get(0).getId());
+        assertEquals(5, expenses.get(1).getId());
+        assertEquals(6, expenses.get(2).getId());
     }
 
 
