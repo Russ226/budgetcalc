@@ -5,11 +5,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.Calendar;
 import java.util.List;
 
-public class ExpenseDAOImpl implements ExpenseDAO {
+@Repository
+public class ExpenseDAOImpl implements ExpenseDAO{
 
     @Autowired
     SessionFactory sessionFactory;
@@ -17,9 +19,9 @@ public class ExpenseDAOImpl implements ExpenseDAO {
     @Override
     public List<Expense> getThisMonth() {
         Session session = sessionFactory.getCurrentSession();
-        String currentMonth = String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
+        int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
 
-        String select = "FROM Expense E WHERE MONTH(E.createdOn) = MONTH(:month)";
+        String select = "FROM Expense E WHERE MONTH(E.createdOn) = :month";
         Query query = session.createQuery(select, Expense.class);
 
         query.setParameter("month", currentMonth);
@@ -33,13 +35,15 @@ public class ExpenseDAOImpl implements ExpenseDAO {
     public List<Expense> getByMonth(String month) {
         Session session = sessionFactory.getCurrentSession();
 
-        String select = "FROM Expense E WHERE MONTH(E.createdOn) = MONTH(:month)";
+        String select = "FROM Expense E WHERE MONTH(E.createdOn) = :month";
         Query query = session.createQuery(select, Expense.class);
 
         query.setParameter("month", month);
 
-        List<Expense> monthsBudget = query.list();
+        List<Expense> monthBudget = query.list();
 
-        return monthsBudget;
+        return monthBudget;
     }
+
+
 }
