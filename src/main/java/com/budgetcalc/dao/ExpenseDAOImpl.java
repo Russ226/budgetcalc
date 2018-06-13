@@ -73,6 +73,18 @@ public class ExpenseDAOImpl implements ExpenseDAO{
 
     }
 
+    @Override
+    public void newBillFromAnotherMonth(BigDecimal amount, String name, Date date) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Expense newExpense = new Expense(amount, name, date);
+
+        try{
+            session.save(newExpense);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 }

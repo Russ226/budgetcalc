@@ -14,8 +14,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -60,6 +64,20 @@ public class TestDAO {
 
         assertEquals(4, expenses.size());
         assertEquals("food", expenses.get(3).getExpenseName());
+    }
+
+    @Test
+    @Transactional
+    public void testNewBillWithDate() throws ParseException {
+        String dateString = "January 29, 2018";
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+
+        expenseDAO.newBillFromAnotherMonth(BigDecimal.valueOf(-25.00), "food", format.parse(dateString));
+
+        List<Expense> expenses = expenseDAO.getByMonth("January");
+
+        assertEquals(1, expenses.size());
+        assertEquals("food", expenses.get(0).getExpenseName());
     }
 
 
