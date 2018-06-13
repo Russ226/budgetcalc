@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,18 @@ public class TestDAO {
         assertEquals(4, expenses.get(0).getId());
         assertEquals(5, expenses.get(1).getId());
         assertEquals(6, expenses.get(2).getId());
+    }
+
+    // test automatically earses new expense after it finishes
+    @Test
+    @Transactional
+    public void testNewBillWithoutDate(){
+        expenseDAO.newBill(BigDecimal.valueOf(-25.00), "food");
+
+        List<Expense> expenses = expenseDAO.getThisMonth();
+
+        assertEquals(4, expenses.size());
+        assertEquals("food", expenses.get(3).getExpenseName());
     }
 
 

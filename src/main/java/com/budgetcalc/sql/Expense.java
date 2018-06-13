@@ -33,6 +33,11 @@ public class Expense {
         this.createdOn = createdOn;
     }
 
+    public Expense(BigDecimal amount, String expenseName) {
+        this.amount = amount;
+        this.expenseName = expenseName;
+    }
+
     public int getId() {
         return id;
     }

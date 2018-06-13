@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import sun.util.calendar.BaseCalendar;
 
 
+import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,6 +56,23 @@ public class ExpenseDAOImpl implements ExpenseDAO{
 
         return monthBudget;
     }
+
+    @Override
+    public void newBill(BigDecimal amount, String name) {
+        Session session = sessionFactory.getCurrentSession();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+
+        Expense newExpense = new Expense(amount, name, date);
+
+        try{
+            session.save(newExpense);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 
 
 }
