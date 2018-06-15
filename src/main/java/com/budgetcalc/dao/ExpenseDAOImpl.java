@@ -51,7 +51,7 @@ public class ExpenseDAOImpl implements ExpenseDAO{
         Query query = session.createQuery(select, Expense.class);
 
         query.setParameter("month", cal.get(Calendar.MONTH) + 1);
-        query.setParameter("month", year);
+        query.setParameter("year", year);
 
         List<Expense> monthBudget = query.list();
 

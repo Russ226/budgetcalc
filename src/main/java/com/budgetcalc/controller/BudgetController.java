@@ -6,8 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -27,6 +32,24 @@ public class BudgetController {
         model.addAttribute("expenses", expenses);
 
         return "budgetTable";
+    }
+
+    @GetMapping("/previous")
+    public String getPreviousMonth(@RequestParam(name="month") String month, Model model) throws ParseException {
+        List<Expense> expenses;
+
+        if(month.toLowerCase() == "january"){
+            expenses = budgetService.getByMonth("december", Calendar.getInstance().get(Calendar.YEAR) - 1);
+        }else{
+            YearMonth thisMonth    = YearMonth.now();
+            YearMonth lastMonth    = thisMonth.minusMonths(1);
+            DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MMMM");
+
+            expenses = budgetService.getByMonth(thisMonth.format(monthYearFormatter),thisMonth.getYear());
+        }
+
+        return "budgetTable";
+
     }
 
 

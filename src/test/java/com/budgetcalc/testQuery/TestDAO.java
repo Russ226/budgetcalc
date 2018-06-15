@@ -47,7 +47,7 @@ public class TestDAO {
     @Transactional
     public void testGetBytMonth() throws ParseException {
 
-        List<Expense> expenses = expenseDAO.getByMonth("February");
+        List<Expense> expenses = expenseDAO.getByMonth("February", 2018);
 
         assertEquals(4, expenses.get(0).getId());
         assertEquals(5, expenses.get(1).getId());
@@ -74,7 +74,7 @@ public class TestDAO {
 
         expenseDAO.newBillFromAnotherMonth(BigDecimal.valueOf(-25.00), "food", format.parse(dateString));
 
-        List<Expense> expenses = expenseDAO.getByMonth("January");
+        List<Expense> expenses = expenseDAO.getByMonth("January", 2018);
 
         assertEquals(1, expenses.size());
         assertEquals("food", expenses.get(0).getExpenseName());
