@@ -40,17 +40,18 @@ public class ExpenseDAOImpl implements ExpenseDAO{
     }
 
     @Override
-    public List<Expense> getByMonth(String month) throws ParseException {
+    public List<Expense> getByMonth(String month, int year) throws ParseException {
         Session session = sessionFactory.getCurrentSession();
 
         Date date = new SimpleDateFormat("MMMM", Locale.ENGLISH).parse(month);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-        String select = "FROM Expense E WHERE MONTH(E.createdOn) = :month";
+        String select = "FROM Expense E WHERE MONTH(E.createdOn) = :month and YEAR(E.createdOn)=:year";
         Query query = session.createQuery(select, Expense.class);
 
         query.setParameter("month", cal.get(Calendar.MONTH) + 1);
+        query.setParameter("month", year);
 
         List<Expense> monthBudget = query.list();
 

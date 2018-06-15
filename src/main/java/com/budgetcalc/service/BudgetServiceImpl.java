@@ -25,8 +25,8 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     @Transactional
-    public List<Expense> getByMonth(String month) throws ParseException {
-        return expenseDAO.getByMonth(month);
+    public List<Expense> getByMonth(String month, int year) throws ParseException {
+        return expenseDAO.getByMonth(month, year);
     }
 
     @Override

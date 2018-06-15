@@ -11,7 +11,7 @@ public interface ExpenseDAO {
 
     List<Expense> getThisMonth();
 
-    List<Expense> getByMonth(String month) throws ParseException;
+    List<Expense> getByMonth(String month, int year) throws ParseException;
 
     void newBill(BigDecimal amount, String name);
 
