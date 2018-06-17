@@ -39,6 +39,7 @@ public class BudgetController {
 
         Month thisMonth = Month.of(expenses.get(0).getCreatedOn().getMonth() + 1);
 
+        model.addAttribute("current", true);
         model.addAttribute("year", Calendar.getInstance().get(Calendar.YEAR));
         model.addAttribute("month", thisMonth.toString());
         model.addAttribute("total", sum);
@@ -70,6 +71,7 @@ public class BudgetController {
         for(Expense expense: expenses){
             sum = sum.add(expense.getAmount());
         }
+        model.addAttribute("current", false);
         model.addAttribute("year", year);
         model.addAttribute("month", lastMonth.toString());
         model.addAttribute("total", sum);

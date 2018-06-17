@@ -30,9 +30,13 @@
     <div th:if = "${expenses.size() == 0 }">
         <h2>No Data Available for <span th:text="${month} + ', ' +  ${year}"/></h2>
     </div>
-    <div>
+    <div th:if = "${current == true}">
         <a th:href="@{/newbill}">New Expense</a>
         <a th:href="@{'/previous?month=' + ${month} + '&year=' + ${year}}">Previous Month</a>
+    </div>
+    <div th:if = "${current == false}">
+        <a th:href="@{'/previous?month=' + ${month} + '&year=' + ${year}}">Previous Month</a>
+        <a th:href="@{/current}">Current Month</a>
     </div>
 </table>
 </body>
