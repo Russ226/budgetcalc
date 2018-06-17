@@ -21,6 +21,10 @@
             <td th:text= "${expense.amount}"></td>
             <td th:text= "${expense.createdOn}"></td>
         </tr>
+        <tr>
+            <td>Total: </td>
+            <td><b th:text = "${total}"/></td>
+        </tr>
     </div>
 
     <div th:if = "${expenses.size() == 0 }">
