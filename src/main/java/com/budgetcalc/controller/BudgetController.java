@@ -26,15 +26,21 @@ public class BudgetController {
     public String getCurrentMonthsBudget(Model model){
         List<Expense> expenses = budgetService.getThisMonth();
         BigDecimal sum = BigDecimal.valueOf(0);
+
         for(Expense expense: expenses){
             sum = sum.add(expense.getAmount());
         }
+
+        Month thisMonth = Month.of(expenses.get(0).getCreatedOn().getMonth());
+
+        model.addAttribute("month", thisMonth.toString());
         model.addAttribute("total", sum);
         model.addAttribute("expenses", expenses);
 
         return "budgetTable";
     }
 
+    // will only go back as far as a year ago
     @GetMapping("/previous")
     public String getPreviousMonth(@RequestParam(name="month") String month, Model model) throws ParseException {
         List<Expense> expenses;
@@ -47,12 +53,15 @@ public class BudgetController {
             DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MMMM");
 
             expenses = budgetService.getByMonth(lastMonth.toString(),Calendar.getInstance().get(Calendar.YEAR));
+            model.addAttribute("month", thisMonth.toString());
         }
 
         BigDecimal sum = BigDecimal.valueOf(0);
         for(Expense expense: expenses){
             sum = sum.add(expense.getAmount());
         }
+
+
         model.addAttribute("total", sum);
         model.addAttribute("expenses", expenses);
 

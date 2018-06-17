@@ -8,19 +8,24 @@
 </head>
 <body>
 <table>
-    <tr>
-        <th>Type</th>
-        <th>Amount</th>
-        <th>Purchased On</th>
+    <div th:if = "${expenses.size() > 0 }">
+        <h2> Budget for the month of <span th:text="${month}"/> </h2>
+        <tr>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Purchased On</th>
 
-    </tr>
-
+        </tr>
         <tr th:each="expense : ${expenses}">
             <td th:text= "${expense.expenseName}"></td>
             <td th:text= "${expense.amount}"></td>
             <td th:text= "${expense.createdOn}"></td>
         </tr>
+    </div>
 
+    <div th:if = "${expenses.size() == 0 }">
+        <h2 th:inline = "text">No Data Available for [[#{month}]]</h2>
+    </div>
 
 </table>
 </body>
