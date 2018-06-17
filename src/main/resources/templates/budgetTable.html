@@ -9,7 +9,7 @@
 <body>
 <table>
     <div th:if = "${expenses.size() > 0 }">
-        <h2> Budget for the month of <span th:text="${month}"/> </h2>
+        <h2> Budget for the month of <span th:text="${month} + ', ' +  ${year}"/> </h2>
         <tr>
             <th>Type</th>
             <th>Amount</th>
@@ -28,9 +28,12 @@
     </div>
 
     <div th:if = "${expenses.size() == 0 }">
-        <h2>No Data Available for <span th:text="${month}"/></h2>
+        <h2>No Data Available for <span th:text="${month} + ', ' +  ${year}"/></h2>
     </div>
-
+    <div>
+        <a th:href="@{/newbill}">New Expense</a>
+        <a th:href="@{'/previous?month=' + ${month} + '&year=' + ${year}}">Previous Month</a>
+    </div>
 </table>
 </body>
 </html>

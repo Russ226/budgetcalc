@@ -38,7 +38,8 @@ public class BudgetController {
         }
 
         Month thisMonth = Month.of(expenses.get(0).getCreatedOn().getMonth() + 1);
-        System.out.println(thisMonth.toString());
+
+        model.addAttribute("year", Calendar.getInstance().get(Calendar.YEAR));
         model.addAttribute("month", thisMonth.toString());
         model.addAttribute("total", sum);
         model.addAttribute("expenses", expenses);
@@ -56,15 +57,20 @@ public class BudgetController {
         }
         Month thisMonth = Month.valueOf(month.toUpperCase());
         Month lastMonth = thisMonth.minus(1);
+        if(thisMonth.toString() == "JANUARY"){
+            year -= 1;
+            expenses = budgetService.getByMonth(lastMonth.toString(),year);
+        }else{
+            expenses = budgetService.getByMonth(lastMonth.toString(),year);
+        }
 
-        expenses = budgetService.getByMonth(lastMonth.toString(),year);
 
 
         BigDecimal sum = BigDecimal.valueOf(0);
         for(Expense expense: expenses){
             sum = sum.add(expense.getAmount());
         }
-
+        model.addAttribute("year", year);
         model.addAttribute("month", lastMonth.toString());
         model.addAttribute("total", sum);
         model.addAttribute("expenses", expenses);
