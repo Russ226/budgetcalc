@@ -31,8 +31,8 @@ public class BudgetController {
             sum = sum.add(expense.getAmount());
         }
 
-        Month thisMonth = Month.of(expenses.get(0).getCreatedOn().getMonth());
-
+        Month thisMonth = Month.of(expenses.get(0).getCreatedOn().getMonth() + 1);
+        System.out.println(thisMonth.toString());
         model.addAttribute("month", thisMonth.toString());
         model.addAttribute("total", sum);
         model.addAttribute("expenses", expenses);
@@ -45,16 +45,14 @@ public class BudgetController {
     public String getPreviousMonth(@RequestParam(name="month") String month, Model model) throws ParseException {
         List<Expense> expenses;
 
-        if(month.toLowerCase() == "january"){
-            expenses = budgetService.getByMonth("december", Calendar.getInstance().get(Calendar.YEAR) - 1);
-        }else{
-            Month thisMonth = Month.valueOf(month.toUpperCase());
-            Month lastMonth = thisMonth.minus(1);
-            DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MMMM");
 
-            expenses = budgetService.getByMonth(lastMonth.toString(),Calendar.getInstance().get(Calendar.YEAR));
-            model.addAttribute("month", thisMonth.toString());
-        }
+        Month thisMonth = Month.valueOf(month.toUpperCase());
+        Month lastMonth = thisMonth.minus(1);
+        DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MMMM");
+
+        expenses = budgetService.getByMonth(lastMonth.toString(),Calendar.getInstance().get(Calendar.YEAR));
+        model.addAttribute("month", lastMonth.toString());
+
 
         BigDecimal sum = BigDecimal.valueOf(0);
         for(Expense expense: expenses){

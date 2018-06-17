@@ -24,7 +24,7 @@
     </div>
 
     <div th:if = "${expenses.size() == 0 }">
-        <h2 th:inline = "text">No Data Available for [[#{month}]]</h2>
+        <h2>No Data Available for <span th:text="${month}"/></h2>
     </div>
 
 </table>
