@@ -2,39 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
     <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
-    <title>Current Month Expenses</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <title th:text = "${month}">Expenses</title>
 
 
 </head>
 <body>
 <table>
     <div th:if = "${expenses.size() > 0 }">
-        <h2> Budget for the month of <span th:text="${month} + ', ' +  ${year}"/> </h2>
-        <tr>
-            <th>Type</th>
-            <th>Amount</th>
-            <th>Purchased On</th>
+        <h2 class = "title"> Budget for the month of <span th:text="${month} + ', ' +  ${year}"/> </h2>
+        <table class = "expenses">
+            <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Purchased On</th>
 
-        </tr>
-        <tr th:each="expense : ${expenses}">
-            <td th:text= "${expense.expenseName}"></td>
-            <td th:text= "${expense.amount}"></td>
-            <td th:text= "${expense.createdOn}"></td>
-        </tr>
-        <tr>
-            <td>Total: </td>
-            <td><b th:text = "${total}"/></td>
-        </tr>
+            </tr>
+            <tr th:each="expense : ${expenses}">
+                <td th:text= "${expense.expenseName}"></td>
+                <td th:text= "${expense.amount}"></td>
+                <td th:text= "${expense.createdOn}"></td>
+            </tr>
+            <tr>
+                <td>Total: </td>
+                <td><b th:text = "${total}"/></td>
+            </tr>
+        </table>
     </div>
 
     <div th:if = "${expenses.size() == 0 }">
-        <h2>No Data Available for <span th:text="${month} + ', ' +  ${year}"/></h2>
+        <h2 class = "title">No Data Available for <span th:text="${month} + ', ' +  ${year}"/></h2>
     </div>
-    <div th:if = "${current == true}">
+
+    <div th:if = "${current == true}" class = "links">
         <a th:href="@{/newbill}">New Expense</a>
         <a th:href="@{'/previous?month=' + ${month} + '&year=' + ${year}}">Previous Month</a>
     </div>
-    <div th:if = "${current == false}">
+    <div th:if = "${current == false}" class = "links">
         <a th:href="@{'/previous?month=' + ${month} + '&year=' + ${year}}">Previous Month</a>
         <a th:href="@{/current}">Current Month</a>
     </div>
