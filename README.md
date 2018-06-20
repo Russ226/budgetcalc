@@ -1,3 +1,3 @@
 # Budget Calcutor 
-## Tech Stack: Java, Springboot, Hibernate, MySQL
+## Tech Stack: Java, Spring boot, Hibernate, MySQL
 
